@@ -1,1 +1,73 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Practical Examples</title><link rel="stylesheet" href="../styles/style.css"></head><body data-page="practical-examples"><div data-header></div><main><section class="page-hero"><div class="container"><span class="eyebrow">SECTION 05 · PRACTICE</span><h1 data-page-title>مثال‌های عملی SDD</h1><p class="lead" data-page-lead>دو مثال آموزشی را از نیازمندی تا task، کد و تست دنبال کنیم.</p></div></section><section class="container content-layout"><article class="article" data-page-content><h2>مثال اول: تسویه‌حساب در CRM</h2><ol><li>تعریف نیازمندی کسب‌وکار.</li><li>استخراج business rules.</li><li>نوشتن specification و معیار پذیرش.</li><li>طراحی فنی با C# و .NET.</li><li>تقسیم کار به taskهای کوچک.</li><li>نوشتن unit test و integration test.</li></ol><h2>مثال دوم: مدیریت سفارش</h2><p>کاربر باید بتواند سفارش را ثبت، تأیید و لغو کند. برای هر حالت، transition مجاز، actor، پیام خطا و event خروجی را در Spec ثبت می‌کنیم.</p><div class="compare"><div><h3>روش معمول</h3><p>نتیجه به جست‌وجو و حافظهٔ تیم وابسته است.</p></div><div><h3>روش SDD</h3><p>خروجی با specification و acceptance criteria بررسی می‌شود.</p></div></div></article><aside class="side-card"><h2>SDD Learning</h2><a href="sdd-introduction.html">01 · Introduction</a><a href="sdd-types.html">02 · Types</a><a href="sdd-benefits.html">03 · Benefits</a><a href="sdd-vs-markdown.html">04 · Comparison</a><a href="practical-examples.html">05 · Examples</a><a href="quiz.html">06 · Quiz</a></aside></section></main><div data-footer></div><script src="../js/main.js"></script></body></html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="مثال کامل Spec-Driven Development از نیازمندی تا تست">
+  <title>مثال‌های عملی SDD</title>
+  <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body data-page="practical-examples">
+  <div data-header></div>
+  <main>
+    <section class="page-hero"><div class="container">
+      <span class="eyebrow">SECTION 05 · PRACTICE</span>
+      <h1 data-page-title>یک مثال کامل SDD؛ از ایده تا تست</h1>
+      <p class="lead" data-page-lead>در این مثال، دقیقاً می‌بینیم در هر بخش چه چیزی نوشته می‌شود، چرا لازم است و خروجی آن به مرحلهٔ بعد چه کمکی می‌کند.</p>
+    </div></section>
+    <section class="container content-layout">
+      <article class="article" data-page-content>
+        <div class="plain-callout"><strong>سناریوی واقعی: لغو سفارش</strong><p>فروشگاه آنلاین می‌خواهد مشتری بتواند سفارش را قبل از ارسال لغو کند. ما این قابلیت را با یک جریان کامل SDD طراحی می‌کنیم؛ از یک جملهٔ مبهم تا کد قابل‌آزمایش.</p></div>
+        <h2>نقشهٔ مثال</h2>
+        <div class="artifact-grid">
+          <div class="artifact-card"><span>01</span><b>Requirement</b><small>چه مسئله‌ای باید حل شود؟</small></div>
+          <div class="artifact-card"><span>02</span><b>Clarification</b><small>چه ابهام‌هایی باید برطرف شود؟</small></div>
+          <div class="artifact-card"><span>03</span><b>Specification</b><small>رفتار دقیق سیستم چیست؟</small></div>
+          <div class="artifact-card"><span>04</span><b>Plan / Design</b><small>چطور آن را بسازیم؟</small></div>
+          <div class="artifact-card"><span>05</span><b>Tasks</b><small>چه کارهای کوچکی لازم است؟</small></div>
+          <div class="artifact-card"><span>06</span><b>Implementation</b><small>کد و تست چطور نوشته می‌شود؟</small></div>
+          <div class="artifact-card"><span>07</span><b>Verify</b><small>از کجا بفهمیم درست است؟</small></div>
+        </div>
+        <h2>بخش ۱: Requirement — نیازمندی</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> هدف کسب‌وکار و نتیجه‌ای که کاربر می‌خواهد؛ بدون نام کلاس، دیتابیس یا راه‌حل فنی.</p>
+        <div class="example-quote">«به‌عنوان خریدار، می‌خواهم تا قبل از ارسال سفارش آن را لغو کنم تا اگر منصرف شدم، هزینهٔ ارسال ایجاد نشود.»</div>
+        <p class="note"><b>چرا؟</b> این جمله به تیم می‌گوید چه ارزشی باید ایجاد شود، اما هنوز جزئیات رفتاری را مشخص نکرده است.</p>
+        <h2>بخش ۲: Clarification — رفع ابهام</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> سؤال‌هایی که اگر پاسخشان مشخص نباشد، دو برنامه‌نویس ممکن است دو رفتار متفاوت بسازند.</p>
+        <div class="example-grid">
+          <div class="example-step"><b>چه کسی اجازه دارد؟</b><p>خود خریدار یا پشتیبانیِ دارای دسترسی؛ نه هر کاربر ناشناس.</p></div>
+          <div class="example-step"><b>در چه وضعیتی؟</b><p><code>Pending</code> و <code>Confirmed</code> قابل لغو هستند؛ <code>Shipped</code> نیست.</p></div>
+          <div class="example-step"><b>بعد از لغو چه می‌شود؟</b><p>موجودی رزروشده آزاد و رویداد لغو منتشر می‌شود.</p></div>
+          <div class="example-step"><b>درخواست تکراری؟</b><p>نباید موجودی دوبار آزاد شود یا دو رویداد معتبر تولید شود.</p></div>
+        </div>
+        <h2>بخش ۳: Specification — قرارداد رفتاری</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> ورودی، قوانین، خروجی، خطاها و سناریوهای قابل‌بررسی. این بخش مرجع مشترک انسان، تیم و AI است.</p>
+        <div class="spec-block"><div><strong>Input / ورودی</strong><span>شناسهٔ سفارش و کاربر درخواست‌کننده</span></div><div><strong>Rule / قانون</strong><span>سفارش ارسال‌شده قابل لغو نیست.</span></div><div><strong>Success / موفقیت</strong><span>وضعیت به <code>Cancelled</code> تغییر کند.</span></div><div><strong>Side effect / اثر جانبی</strong><span>موجودی آزاد و <code>OrderCancelled</code> منتشر شود.</span></div></div>
+        <div class="acceptance"><h3>Acceptance Criteria — معیار پذیرش</h3><ol><li>اگر سفارش تأییدشده باشد، پاسخ موفق و وضعیت <code>Cancelled</code> برگردد.</li><li>اگر سفارش ارسال شده باشد، خطای <code>409</code> برگردد و سفارش تغییر نکند.</li><li>کاربر غیرمجاز پاسخ <code>403</code> بگیرد و هیچ اثر جانبی رخ ندهد.</li><li>درخواست تکراری، آزادسازی یا رویداد تکراری ایجاد نکند.</li></ol></div>
+        <h2>بخش ۴: Plan / Design — طرح فنی</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> تصمیم‌های فنی، محل تغییر فایل‌ها، مرز مسئولیت‌ها و ریسک‌ها؛ نه کد کامل.</p>
+        <div class="flow-list"><div><b>API</b><span><code>POST /orders/{id}/cancel</code> — دریافت درخواست و برگرداندن نتیجه</span></div><div><b>Use case</b><span><code>CancelOrderHandler</code> — بررسی کاربر و اجرای عملیات</span></div><div><b>Domain</b><span><code>Order.cancel()</code> — کنترل transition مجاز وضعیت</span></div><div><b>Event</b><span><code>OrderCancelled</code> — انتشار فقط بعد از موفقیت تراکنش</span></div></div>
+        <h2>بخش ۵: Tasks — کارهای اجرایی</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> کارهای کوچک، مشخص و قابل انجام که هرکدام خروجی و معیار تکمیل دارند.</p>
+        <div class="task-list"><div><span>01</span><p><b>تغییر مدل سفارش</b><small>افزودن Cancelled و متد cancel با بررسی transition.</small></p></div><div><span>02</span><p><b>ساخت Handler</b><small>بررسی مالکیت، وضعیت سفارش و خطاهای کاربردی.</small></p></div><div><span>03</span><p><b>افزودن API</b><small>ساخت endpoint و نگاشت خطاها به HTTP status مناسب.</small></p></div><div><span>04</span><p><b>مدیریت اثر جانبی</b><small>آزادسازی موجودی و انتشار event به‌صورت امن.</small></p></div><div><span>05</span><p><b>نوشتن تست‌ها</b><small>پوشش موفقیت، خطا، دسترسی و idempotency.</small></p></div></div>
+        <h2>بخش ۶: Implementation — پیاده‌سازی</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> کد واقعی بر اساس طرح و Taskها. پیاده‌سازی نباید قانون جدیدی بسازد که در Specification وجود ندارد.</p>
+        <pre class="code-sample"><code>if (!order.CanBeCancelled())
+    return Conflict("Order has already shipped");
+
+order.Cancel();
+await inventory.Release(order.Id);
+await events.Publish(new OrderCancelled(order.Id));</code></pre>
+        <p>این قطعه فقط نمونهٔ ساده است؛ در پروژهٔ واقعی باید تراکنش، تکرارپذیری، لاگ و مدیریت خطا هم با معماری پروژه هماهنگ شوند.</p>
+        <h2>بخش ۷: Verify — اعتبارسنجی</h2>
+        <p><b>اینجا چه قرار می‌گیرد؟</b> شواهدی که نشان می‌دهد خروجی واقعاً با Specification یکی است.</p>
+        <table><thead><tr><th>سناریو</th><th>نتیجهٔ مورد انتظار</th><th>تست</th></tr></thead><tbody><tr><td>لغو سفارش تأییدشده</td><td>۲۰۰، Cancelled، یک event</td><td>Unit + Integration</td></tr><tr><td>لغو سفارش ارسال‌شده</td><td>۴۰۹، بدون تغییر</td><td>Unit</td></tr><tr><td>کاربر غیرمجاز</td><td>۴۰۳، بدون آزادسازی</td><td>Integration</td></tr><tr><td>درخواست تکراری</td><td>بدون اثر جانبی تکراری</td><td>Idempotency</td></tr></tbody></table>
+        <div class="note"><b>نتیجه:</b> در SDD مسیر «نیازمندی ← Spec ← Design ← Tasks ← Code ← Test» قابل مشاهده است. اگر قانون لغو تغییر کند، دقیقاً می‌دانیم کدام بخش‌ها باید بازبینی شوند.</div>
+      </article>
+      <aside class="side-card"><h2>مسیر یادگیری</h2><a href="sdd-introduction.html">01 · دستورهای OpenSpec</a><a href="sdd-types.html">02 · دستورهای Spec Kit</a><a href="sdd-benefits.html">03 · مزایا و معایب</a><a href="sdd-vs-markdown.html">04 · Spec Kit یا OpenSpec؟</a><a href="practical-examples.html" aria-current="page">05 · مثال‌های عملی</a><a href="quiz.html">06 · آزمون ۲۰ سؤالی</a></aside>
+    </section>
+  </main>
+  <div data-footer></div>
+  <script src="../js/main.js"></script>
+</body>
+</html>
